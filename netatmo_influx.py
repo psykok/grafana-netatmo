@@ -13,7 +13,7 @@ import json
 #     "INFLUX_HOST" : "",
 #     "INFLUX_PORT" : "",
 #   }
-INFLUXCONFIG = "~/.netatmo.mysql"
+INFLUXCONFIG = "~/.netatmo.influxdb"
 
 if (INFLUXCONFIG):
   influxconfigFile = expanduser(INFLUXCONFIG)
