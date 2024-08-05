@@ -6,7 +6,15 @@ from influxdb import InfluxDBClient
 from os.path import expanduser, exists
 import json
 
+#
+#  custom influx config file
+#
+#   {
+#     "INFLUX_HOST" : "",
+#     "INFLUX_PORT" : "",
+#   }
 INFLUXCONFIG = "~/.netatmo.mysql"
+
 if (INFLUXCONFIG):
   influxconfigFile = expanduser(INFLUXCONFIG)
   with open(influxconfigFile, "r") as f:
@@ -17,15 +25,14 @@ if (INFLUXCONFIG):
 else:
   #print("default")
   client = InfluxDBClient()
+  if {'name': 'netatmo'} not in client.get_list_database():
+    client.create_database('netatmo')
 
 authorization = lnetatmo.ClientAuth()
 
 weatherData = lnetatmo.WeatherStationData(authorization)
 
-if {'name': 'netatmo'} not in client.get_list_database():
-    client.create_database('netatmo')
-
-print(weatherData.stationByName())
+#print(weatherData.stationByName())
 for station in weatherData.stations:
     station_data = []
     module_data = []
